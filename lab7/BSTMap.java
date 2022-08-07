@@ -13,7 +13,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         this.left = null;
         this.right = null;
     }
-
+    
     public boolean containsKey(K key){
         return (findKeyRecurse(key, this) != null);
     }
@@ -52,7 +52,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
     }
     public void put(K key, V value){
-        putRecurse(key, value, this);
+        putRecurse2(key, value, this);
     }
     private void putRecurse(K key, V value, BSTMap map){
         if (map.key == null){
@@ -77,6 +77,21 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                 putRecurse(key, value, map.right);
             }
         }
+    }
+    private BSTMap putRecurse2(K key, V value, BSTMap map){
+        if(map == null){
+            BSTMap<K, V> temp = new BSTMap<>();
+            temp.value = value;
+            temp.key = key;
+            return temp;
+        }else if(map.key == null){
+            map.key = key;
+            map.value = value;
+        }else if (map.key.compareTo(key) < 0) {
+            map.right = putRecurse2(key, value, map.right);
+        }else if (map.key.compareTo(key) > 0) {
+            map.left = putRecurse2(key, value, map.left);}
+        return map;
     }
     public Set<K> keySet() throws UnsupportedOperationException{
         throw new UnsupportedOperationException();
